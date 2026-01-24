@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+/* ===== Global ===== */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+
+ 
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  background: #131921;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+}
+
+.logout {
+  cursor: pointer;
+  color: orange;
+}
+
+/* ===== Container ===== */
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* ===== Hero ===== */
+.hero {
+  background: linear-gradient(to right, #111827, #1f2937);
+  color: white;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.hero button {
+  background: #facc15;
+  border: none;
+  padding: 12px 22px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ===== Sections ===== */
+.section {
+  padding: 40px 20px;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* ===== Product Grid ===== */
+.grid {
+  max-width: 1200px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+/* ===== Product Card ===== */
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.card img {
+  height: 150px;
+  object-fit: contain;
+}
+
+.card button {
+  background: #ffd814;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* ===== Fashion Card ===== */
+.clothing-card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+}
+
+.clothing-card button {
+  background: #ffd814;
+  height: 40px;
+}
+
+
+/* Image */
+.image-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f4f4f4;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-title {
+  margin-top: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.product-price {
+  margin-bottom: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+
+
+/* Qty buttons */
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+
+.summary-total {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: #ffd814;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: #ddd;
+  padding: 15px;
+  text-align: center;
+}
+
+/* ===== Misc ===== */
+.error {
+  color: red;
+}
+
+.cart-msg {
+  margin-top: 10px;
+  background: #dcfce7;
+  color: #166534;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+/* PRODUCTS PAGE LAYOUT */
+.products-layout {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+
+/* SIDEBAR */
+.sidebar {
+  margin-left: 0;          /* ✅ explicitly zero */
+  position: sticky;
+  top: 100px;
+
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+/* Sidebar title (optional) */
+.sidebar h3 {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Sidebar buttons */
+.sidebar button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #f3f4f6;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sidebar button:hover {
+  background: #e5e7eb;
+}
+
+.sidebar button.active {
+  background: #ffd814;
+  font-weight: 600;
+}
+
+
+/* PRODUCTS GRID */
+.products-layout {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0;              /* 🔥 remove side padding */
+  
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 1024px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .products-layout {
+    padding-left: 0;
+  }
+}
+
