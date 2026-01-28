@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { increaseQty, decreaseQty } from "../redux/cartSlice";
+import { increaseQty, decreaseQty, deleteItem } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 function Cart ()
@@ -16,7 +16,7 @@ function Cart ()
     if ( cart.length === 0 )
     {
         return (
-            <div className="min-h-[60vh] flex items-center justify-center text-xl">
+            <div className="min-h-[60vh] flex items-center justify-center text-xl font-medium">
                 Your cart is empty
             </div>
         );
@@ -24,7 +24,7 @@ function Cart ()
 
     return (
         <div className="bg-gray-50 py-10">
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-4">
 
                 {/* Page Title */ }
                 <h1 className="text-3xl font-semibold mb-8">Your Cart</h1>
@@ -37,22 +37,25 @@ function Cart ()
                         { cart.map( ( item ) => (
                             <div
                                 key={ item.id }
-                                className="flex items-center gap-6 bg-white p-6 rounded-xl shadow"
+                                className="flex flex-col sm:flex-row items-center gap-6 bg-white p-6 rounded-xl shadow"
                             >
+                                {/* Image */ }
                                 <img
                                     src={ item.image }
                                     alt={ item.title }
                                     className="w-24 h-32 object-cover rounded-lg"
                                 />
 
-                                <div className="flex-1">
-                                    <h3 className="text-lg font-semibold">
+                                {/* Details */ }
+                                <div className="flex-1 w-full">
+                                    <h3 className="text-lg font-semibold mb-2">
                                         { item.title }
                                     </h3>
 
-                                    <div className="flex items-center gap-3 mt-4">
+                                    {/* Quantity */ }
+                                    <div className="flex items-center gap-3">
                                         <button
-                                            className="w-8 h-8 border rounded text-lg"
+                                            className="w-8 h-8 border rounded text-lg hover:bg-gray-100"
                                             onClick={ () => dispatch( decreaseQty( item.id ) ) }
                                         >
                                             −
@@ -61,7 +64,7 @@ function Cart ()
                                         <span className="font-medium">{ item.qty }</span>
 
                                         <button
-                                            className="w-8 h-8 border rounded text-lg"
+                                            className="w-8 h-8 border rounded text-lg hover:bg-gray-100"
                                             onClick={ () => dispatch( increaseQty( item.id ) ) }
                                         >
                                             +
@@ -69,8 +72,18 @@ function Cart ()
                                     </div>
                                 </div>
 
-                                <div className="text-lg font-semibold">
-                                    ₹{ item.price * item.qty }
+                                {/* Price + Delete */ }
+                                <div className="flex flex-col items-end gap-3">
+                                    <div className="text-lg font-semibold">
+                                        ₹{ item.price * item.qty }
+                                    </div>
+
+                                    <button
+                                        onClick={ () => dispatch( deleteItem( item.id ) ) }
+                                        className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-1.5 rounded transition"
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                         ) ) }
@@ -90,7 +103,16 @@ function Cart ()
 
                             <button
                                 onClick={ () => navigate( "/checkout" ) }
-                                className="w-full bg-yellow-400 hover:bg-yellow-500 text-black py-3 rounded-lg font-semibold transition"
+                                className="w-full 
+                                bg-yellow-400 hover:bg-yellow-500 
+                                text-black 
+                                py-4 px-6            
+                                rounded-lg 
+                                font-semibold 
+                                text-base            
+                                transition 
+                                flex items-center justify-center"
+
                             >
                                 Proceed to Checkout
                             </button>
