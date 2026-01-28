@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <!-- Background -->
+  <rect width="800" height="400" fill="#131921"/>
+  
+  <!-- Shopping bag icon -->
+  <g transform="translate(200, 120)">
+    <!-- Bag body -->
+    <path d="M 10 40 L 0 160 L 120 160 L 110 40 Z" fill="#FF9900" stroke="#FF9900" stroke-width="2"/>
+    
+    <!-- Bag handle -->
+    <path d="M 30 40 Q 30 10, 60 10 Q 90 10, 90 40" fill="none" stroke="#FF9900" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Checkmark inside bag -->
+    <path d="M 35 85 L 50 100 L 85 65" fill="none" stroke="#131921" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Text: ShopEasy -->
+  <g transform="translate(340, 200)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#FFFFFF">
+      Shop<tspan fill="#FF9900">Easy</tspan>
+    </text>
+  </g>
+  
+  <!-- Tagline -->
+  <text x="400" y="260" font-family="Arial, sans-serif" font-size="20" fill="#C0C0C0" text-anchor="middle" letter-spacing="2">
+    YOUR SHOPPING MADE SIMPLE
+  </text>
+</svg>
