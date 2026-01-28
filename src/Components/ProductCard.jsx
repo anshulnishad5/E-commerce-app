@@ -13,7 +13,9 @@ function ProductCard ( { product } )
     };
 
     return (
-        <div className="clothing-card">
+        <div className="clothing-card"
+            
+        >
             {/* Image */ }
             <div className="image-wrapper">
                 <img src={ product.image } alt={ product.title } />

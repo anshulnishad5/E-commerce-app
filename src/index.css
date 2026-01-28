@@ -148,12 +148,17 @@ body {
   background: #f4f4f4;
 }
 
+/* Image */
 .image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;  
 }
-
+/* Hover zoom */
+.image-wrapper:hover img {
+  transform: scale(1.08);            
+}
 .product-title {
   margin-top: 14px;
   font-size: 16px;
