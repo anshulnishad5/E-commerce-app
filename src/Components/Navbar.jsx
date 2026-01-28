@@ -14,17 +14,18 @@ function Navbar ()
         <nav className="navbar">
             {/* LEFT: Logo + Brand */ }
             {/* LEFT: Logo + Brand */ }
-            <div className="flex items-center gap-0 bg-slate-850 px-3 py-3 rounded-md">
+            <div className="flex items-center gap-2 bg-slate-850 px-3 py-2 rounded-md">
                 <img
                     src={ logo }
                     alt="ShopEasy Logo"
-                    className="w-9 h-9 object-contain mb-1"
+                    className="w-8 h-8 object-contain"
                 />
 
-                <h1 className="text-2xl font-bold text-white tracking-wide ">
+                <h1 className="text-xl font-bold text-white leading-none">
                     ShopEasy
                 </h1>
             </div>
+
 
 
 
