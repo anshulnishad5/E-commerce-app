@@ -9,6 +9,8 @@ function OrderSummary ()
 
     //  Get cart items from Redux
     const cart = useSelector( ( state ) => state.cart.items );
+    const user = useSelector( ( state ) => state.auth.user );
+
 
     const total = cart.reduce(
         ( sum, item ) => sum + item.price * item.qty,
