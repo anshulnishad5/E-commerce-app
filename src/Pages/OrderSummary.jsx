@@ -16,12 +16,11 @@ function OrderSummary ()
         ( sum, item ) => sum + item.price * item.qty,
         0
     );
-
     const confirm = async () =>
     {
-        if ( !user || !user.email )
+        if ( !user?.email )
         {
-            alert( "User email not found. Please login again." );
+            alert( "User email missing. Please login again." );
             return;
         }
 
@@ -33,7 +32,7 @@ function OrderSummary ()
                 total,
             };
 
-            // Save order locally
+            // Save order
             const orders = JSON.parse( localStorage.getItem( "orders" ) ) || [];
             orders.push( {
                 id: Date.now(),
@@ -43,23 +42,19 @@ function OrderSummary ()
             } );
             localStorage.setItem( "orders", JSON.stringify( orders ) );
 
-            // ✅ CORRECT API PATH (no .js)
             const res = await fetch( "/api/send-invoice", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify( orderData ),
             } );
 
-            if ( !res.ok )
-            {
-                throw new Error( "Invoice email failed" );
-            }
+            if ( !res.ok ) throw new Error( "Invoice failed" );
 
             dispatch( clearCart() );
             navigate( "/orders" );
-        } catch ( error )
+        } catch ( err )
         {
-            console.error( error );
+            console.error( err );
             alert( "Order placed, but invoice email failed ❌" );
             dispatch( clearCart() );
             navigate( "/orders" );
