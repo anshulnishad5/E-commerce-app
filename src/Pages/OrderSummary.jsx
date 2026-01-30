@@ -19,6 +19,12 @@ function OrderSummary ()
 
     const confirm = async () =>
     {
+        if ( !user || !user.email )
+        {
+            alert( "User email not found. Please login again." );
+            return;
+        }
+
         try
         {
             const orderData = {
@@ -37,8 +43,8 @@ function OrderSummary ()
             } );
             localStorage.setItem( "orders", JSON.stringify( orders ) );
 
-            // 🔹 Send invoice email (API)
-            const res = await fetch( "/api/send-invoice.js", {
+            // ✅ CORRECT API PATH (no .js)
+            const res = await fetch( "/api/send-invoice", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify( orderData ),
@@ -46,19 +52,20 @@ function OrderSummary ()
 
             if ( !res.ok )
             {
-                throw new Error( "Failed to send invoice" );
+                throw new Error( "Invoice email failed" );
             }
 
             dispatch( clearCart() );
             navigate( "/orders" );
         } catch ( error )
         {
-            alert( "Order placed, but invoice email failed ❌" );
             console.error( error );
+            alert( "Order placed, but invoice email failed ❌" );
             dispatch( clearCart() );
             navigate( "/orders" );
         }
     };
+
 
 
 
