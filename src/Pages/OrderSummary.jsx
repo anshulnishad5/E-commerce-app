@@ -17,32 +17,47 @@ function OrderSummary ()
 
     const confirm = async () =>
     {
-        const orderData = {
-            email: user.email,
-            cart,
-            total,
-        };
+        try
+        {
+            const orderData = {
+                email: user.email,
+                cart,
+                total,
+            };
 
-        // Save order locally
-        const orders = JSON.parse( localStorage.getItem( "orders" ) ) || [];
-        orders.push( {
-            id: Date.now(),
-            items: cart,
-            total,
-            date: new Date().toLocaleString(),
-        } );
-        localStorage.setItem( "orders", JSON.stringify( orders ) );
+            // Save order locally
+            const orders = JSON.parse( localStorage.getItem( "orders" ) ) || [];
+            orders.push( {
+                id: Date.now(),
+                items: cart,
+                total,
+                date: new Date().toLocaleString(),
+            } );
+            localStorage.setItem( "orders", JSON.stringify( orders ) );
 
-        // 🔹 Send invoice email
-        await fetch( "/api/send-invoice", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify( orderData ),
-        } );
+            // 🔹 Send invoice email (API)
+            const res = await fetch( "/api/send-invoice", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify( orderData ),
+            } );
 
-        dispatch( clearCart() );
-        navigate( "/orders" );
+            if ( !res.ok )
+            {
+                throw new Error( "Failed to send invoice" );
+            }
+
+            dispatch( clearCart() );
+            navigate( "/orders" );
+        } catch ( error )
+        {
+            alert( "Order placed, but invoice email failed ❌" );
+            console.error( error );
+            dispatch( clearCart() );
+            navigate( "/orders" );
+        }
     };
+
 
 
     // EMPTY CART UI
