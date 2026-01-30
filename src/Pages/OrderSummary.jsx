@@ -36,7 +36,7 @@ function OrderSummary ()
             localStorage.setItem( "orders", JSON.stringify( orders ) );
 
             // 🔹 Send invoice email (API)
-            const res = await fetch( "/api/send-invoice", {
+            const res = await fetch( "/api/send-invoice.js", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify( orderData ),
