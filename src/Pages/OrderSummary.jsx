@@ -122,16 +122,11 @@ function OrderSummary ()
 
                 {/* Confirm Button */ }
                 <button
-                    onClick={ () =>
-                    {
-                        console.log( "CONFIRM CLICKED" );
-                        alert( "Confirm clicked" );
-                    } }
+                    onClick={ confirm }
                     className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 rounded-lg transition"
                 >
                     Confirm Order
                 </button>
-
             </div>
         </div>
     );
