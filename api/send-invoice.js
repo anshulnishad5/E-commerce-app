@@ -1,5 +1,5 @@
-import nodemailer from "nodemailer";
 import PDFDocument from "pdfkit";
+import nodemailer from "nodemailer";
 
 export default async function handler ( req, res )
 {
@@ -8,11 +8,11 @@ export default async function handler ( req, res )
         return res.status( 405 ).json( { message: "Method not allowed" } );
     }
 
+    const { email, cart, total } = req.body;
+
     try
     {
-        const { email, cart, total } = req.body;
-
-        // 🔹 Create PDF invoice
+        // 🔹 Create PDF
         const doc = new PDFDocument();
         let buffers = [];
 
@@ -21,7 +21,7 @@ export default async function handler ( req, res )
         {
             const pdfData = Buffer.concat( buffers );
 
-            // 🔹 Mail transporter
+            // 🔹 Email transporter
             const transporter = nodemailer.createTransport( {
                 service: "gmail",
                 auth: {
@@ -30,11 +30,12 @@ export default async function handler ( req, res )
                 },
             } );
 
+            // 🔹 Send mail
             await transporter.sendMail( {
                 from: `"ShopEasy" <${ process.env.EMAIL_USER }>`,
                 to: email,
-                subject: "Your ShopEasy Invoice 🧾",
-                text: "Thank you for your order! Invoice attached.",
+                subject: "Your ShopEasy Invoice",
+                text: "Thank you for your order. Please find the invoice attached.",
                 attachments: [
                     {
                         filename: "invoice.pdf",
@@ -43,27 +44,27 @@ export default async function handler ( req, res )
                 ],
             } );
 
-            return res.status( 200 ).json( { success: true } );
+            res.status( 200 ).json( { success: true } );
         } );
 
-        // PDF content
-        doc.fontSize( 20 ).text( "ShopEasy Invoice", { align: "center" } );
+        // 🔹 PDF Content
+        doc.fontSize( 22 ).text( "ShopEasy Invoice", { align: "center" } );
         doc.moveDown();
 
         cart.forEach( ( item ) =>
         {
-            doc
-                .fontSize( 12 )
-                .text( `${ item.title } - ${ item.qty } × ₹${ item.price }` );
+            doc.fontSize( 14 ).text(
+                `${ item.title }  | Qty: ${ item.qty }  | ₹${ item.price * item.qty }`
+            );
         } );
 
         doc.moveDown();
-        doc.fontSize( 14 ).text( `Total: ₹${ total }` );
+        doc.fontSize( 18 ).text( `Total: ₹${ total }`, { align: "right" } );
 
         doc.end();
-    } catch ( error )
+    } catch ( err )
     {
-        console.error( error );
-        return res.status( 500 ).json( { error: "Email failed" } );
+        console.error( err );
+        res.status( 500 ).json( { success: false } );
     }
 }
