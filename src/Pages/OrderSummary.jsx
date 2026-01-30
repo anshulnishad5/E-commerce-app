@@ -18,21 +18,32 @@ function OrderSummary ()
     );
     const confirm = async () =>
     {
-        if ( !user?.email )
+        if ( !user || !user.email )
         {
-            alert( "User email missing. Please login again." );
+            alert( "Please login again. User email not found." );
             return;
         }
 
         try
         {
-            const orderData = {
-                email: user.email,
-                cart,
-                total,
-            };
+            const res = await fetch( "/api/send-invoice", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify( {
+                    email: user.email,
+                    cart,
+                    total,
+                } ),
+            } );
 
-            // Save order
+            if ( !res.ok )
+            {
+                throw new Error( "Invoice API failed" );
+            }
+
+            // ✅ Save order locally
             const orders = JSON.parse( localStorage.getItem( "orders" ) ) || [];
             orders.push( {
                 id: Date.now(),
@@ -42,24 +53,26 @@ function OrderSummary ()
             } );
             localStorage.setItem( "orders", JSON.stringify( orders ) );
 
-            const res = await fetch( "/api/send-invoice", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( orderData ),
-            } );
-
-            if ( !res.ok ) throw new Error( "Invoice failed" );
-
+            // ✅ Clear cart
             dispatch( clearCart() );
+
+            // ✅ Success message
+            alert( "Order placed successfully! Invoice sent to your email 📧" );
+
+            // ✅ Navigate
             navigate( "/orders" );
-        } catch ( err )
+        } catch ( error )
         {
-            console.error( err );
+            console.error( error );
+
             alert( "Order placed, but invoice email failed ❌" );
+
+            // Still complete order
             dispatch( clearCart() );
             navigate( "/orders" );
         }
     };
+    
 
 
 

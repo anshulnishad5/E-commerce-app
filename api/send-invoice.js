@@ -1,5 +1,7 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import PDFDocument from "pdfkit";
+
+const resend = new Resend( process.env.RESEND_API_KEY );
 
 export default async function handler ( req, res )
 {
@@ -10,19 +12,35 @@ export default async function handler ( req, res )
 
     const { email, cart, total } = req.body;
 
-    if ( !email || !cart || !total )
-    {
-        return res.status( 400 ).json( { message: "Invalid order data" } );
-    }
-
     try
     {
-        /* ---------- CREATE PDF BUFFER ---------- */
-        const doc = new PDFDocument( { margin: 50 } );
+        // 🔹 Create PDF
+        const doc = new PDFDocument( { size: "A4", margin: 50 } );
         const buffers = [];
 
         doc.on( "data", buffers.push.bind( buffers ) );
+        doc.on( "end", async () =>
+        {
+            const pdfBuffer = Buffer.concat( buffers );
 
+            // 🔹 Send email with PDF attachment
+            await resend.emails.send( {
+                from: "ShopEasy <onboarding@resend.dev>",
+                to: email,
+                subject: "Your ShopEasy Invoice (PDF)",
+                html: "<p>Thank you for your order! Your invoice is attached.</p>",
+                attachments: [
+                    {
+                        filename: "invoice.pdf",
+                        content: pdfBuffer,
+                    },
+                ],
+            } );
+
+            return res.status( 200 ).json( { success: true } );
+        } );
+
+        // 🔹 PDF Content
         doc.fontSize( 22 ).text( "ShopEasy Invoice", { align: "center" } );
         doc.moveDown();
 
@@ -30,47 +48,16 @@ export default async function handler ( req, res )
         {
             doc
                 .fontSize( 14 )
-                .text(
-                    `${ item.title } | Qty: ${ item.qty } | ₹${ item.price * item.qty }`
-                );
+                .text( `${ item.title } | Qty: ${ item.qty } | ₹${ item.price * item.qty }` );
         } );
 
         doc.moveDown();
         doc.fontSize( 18 ).text( `Total: ₹${ total }`, { align: "right" } );
 
         doc.end();
-
-        const pdfBuffer = await new Promise( ( resolve ) =>
-        {
-            doc.on( "end", () => resolve( Buffer.concat( buffers ) ) );
-        } );
-
-        /* ---------- SEND EMAIL ---------- */
-        const transporter = nodemailer.createTransport( {
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        } );
-
-        await transporter.sendMail( {
-            from: `"ShopEasy" <${ process.env.EMAIL_USER }>`,
-            to: email,
-            subject: "Your ShopEasy Invoice (PDF)",
-            text: "Thank you for your order. Invoice attached.",
-            attachments: [
-                {
-                    filename: "invoice.pdf",
-                    content: pdfBuffer,
-                },
-            ],
-        } );
-
-        return res.status( 200 ).json( { success: true } );
     } catch ( error )
     {
-        console.error( "SEND INVOICE ERROR:", error );
-        return res.status( 500 ).json( { message: "Email failed" } );
+        console.error( error );
+        return res.status( 500 ).json( { success: false } );
     }
 }
