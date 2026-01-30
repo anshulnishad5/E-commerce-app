@@ -63,7 +63,7 @@ function Footer ()
                             </li>
                             <li style={ { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', fontSize: '14px' } }>
                                 <Mail size={ 16 } />
-                                <span>support@shopeasy.com</span>
+                                <span>support@shopeasy778@gmail.com</span>
                             </li>
                             <li style={ { display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '14px' } }>
                                 <MapPin size={ 16 } style={ { marginTop: '4px' } } />

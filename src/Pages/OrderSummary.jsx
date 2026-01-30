@@ -7,7 +7,7 @@ function OrderSummary ()
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // 🔥 Get cart items from Redux
+    //  Get cart items from Redux
     const cart = useSelector( ( state ) => state.cart.items );
 
     const total = cart.reduce(
@@ -17,44 +17,31 @@ function OrderSummary ()
 
     const confirm = async () =>
     {
-        try
-        {
-            // 1️⃣ Save order locally
-            const orders = JSON.parse( localStorage.getItem( "orders" ) ) || [];
+        const orderData = {
+            email: user.email,
+            cart,
+            total,
+        };
 
-            const newOrder = {
-                id: Date.now(),
-                items: cart,
-                total,
-                date: new Date().toLocaleString(),
-            };
+        // Save order locally
+        const orders = JSON.parse( localStorage.getItem( "orders" ) ) || [];
+        orders.push( {
+            id: Date.now(),
+            items: cart,
+            total,
+            date: new Date().toLocaleString(),
+        } );
+        localStorage.setItem( "orders", JSON.stringify( orders ) );
 
-            orders.push( newOrder );
-            localStorage.setItem( "orders", JSON.stringify( orders ) );
+        // 🔹 Send invoice email
+        await fetch( "/api/send-invoice", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify( orderData ),
+        } );
 
-            // 2️⃣ Send invoice email via API
-            await fetch( "/api/send-invoice", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify( {
-                    email: JSON.parse( localStorage.getItem( "user" ) )?.email, // OR user.email from Redux
-                    cart,
-                    total,
-                } ),
-            } );
-
-            // 3️⃣ Clear cart
-            dispatch( clearCart() );
-
-            // 4️⃣ Redirect
-            navigate( "/orders" );
-        } catch ( error )
-        {
-            console.error( "Order failed:", error );
-            alert( "Something went wrong while placing order" );
-        }
+        dispatch( clearCart() );
+        navigate( "/orders" );
     };
 
 
