@@ -49,7 +49,7 @@ function Products ()
                 </aside>
 
                 {/* ✅ PRODUCTS GRID */ }
-                <div className="grid">
+                <div className="Product-grid">
                     { filteredProducts.map( p => (
                         <ProductCard key={ p.id } product={ p } />
                     ) ) }
