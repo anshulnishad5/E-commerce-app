@@ -11,7 +11,7 @@ function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="bg-[#131921]  shadow-md px-4 md:px-8 py-3">
+        <nav className="bg-[#131921] text-white shadow-md px-4 md:px-8 py-3">
             <div className="flex justify-between items-center">
 
                 {/* LOGO */}
@@ -23,16 +23,16 @@ function Navbar() {
                     />
                 </Link>
 
-                {/* HAMBURGER (Mobile Only) */}
+                {/* HAMBURGER */}
                 <button
-                    className="md:hidden text-2xl"
+                    className="md:hidden text-2xl text-white"
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     ☰
                 </button>
 
                 {/* DESKTOP MENU */}
-                <ul className="hidden md:flex text-white-600 items-center gap-6 font-medium">
+                <ul className="hidden md:flex items-center gap-6 font-medium text-white">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/products">Products</Link></li>
                     <li><Link to="/cart">🛒 ({cart.length})</Link></li>
@@ -40,7 +40,7 @@ function Navbar() {
                     {user ? (
                         <>
                             <li><Link to="/orders">My Orders</Link></li>
-                            <li className="text-sm text-white-600">{user.email}</li>
+                            <li className="text-sm opacity-80">{user.email}</li>
                             <li
                                 className="cursor-pointer text-red-500"
                                 onClick={() => dispatch(logout())}
@@ -60,7 +60,7 @@ function Navbar() {
 
             {/* MOBILE MENU */}
             {isOpen && (
-                <ul className="md:hiddentext-white-600 flex flex-col gap-4 mt-4 font-medium">
+                <ul className="md:hidden flex flex-col gap-4 mt-4 font-medium text-white">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/products">Products</Link></li>
                     <li><Link to="/cart">🛒 ({cart.length})</Link></li>
@@ -68,7 +68,7 @@ function Navbar() {
                     {user ? (
                         <>
                             <li><Link to="/orders">My Orders</Link></li>
-                            <li className="text-sm text-white-600">{user.email}</li>
+                            <li className="text-sm opacity-80">{user.email}</li>
                             <li
                                 className="cursor-pointer text-red-500"
                                 onClick={() => dispatch(logout())}
@@ -90,4 +90,5 @@ function Navbar() {
 }
 
 export default Navbar;
+
 
