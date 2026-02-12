@@ -57,36 +57,34 @@ body {
 }
 
 /* ================= PRODUCT GRID ================= */
-.grid {
+.product-grid {
   width: 100%;
   max-width: 1200px;
   margin: 30px auto;
-
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
 }
 
-/* Small devices */
+
 @media (min-width: 480px) {
-  .grid {
+  .product-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Tablets */
 @media (min-width: 768px) {
-  .grid {
+  .product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Desktop */
 @media (min-width: 1024px) {
-  .grid {
+  .product-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
 
 /* ================= PRODUCT CARD ================= */
 .card {
