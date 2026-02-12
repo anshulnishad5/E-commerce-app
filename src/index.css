@@ -42,37 +42,7 @@ body {
   padding: 0 16px;
 }
 
-/*  ================= HERO ================= */
-/* .hero {
-  background: linear-gradient(to right, #111827, #1f2937);
-  color: white;
-  padding: 60px 16px;
-  text-align: center;
-}
 
-.hero h1 {
-  font-size: clamp(22px, 5vw, 42px);
-  margin-bottom: 10px;
-}
-
-.hero p {
-  font-size: clamp(14px, 3vw, 18px);
-  margin-bottom: 20px;
-}
-
-.hero button {
-  background: #facc15;
-  border: none;
-  padding: 12px 22px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-@media (min-width: 768px) {
-  .hero {
-    padding: 100px 40px;
-  }
-}  */
 
 /* ================= SECTIONS ================= */
 .section {
