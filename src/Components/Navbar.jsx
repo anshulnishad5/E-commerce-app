@@ -11,7 +11,7 @@ function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="bg-[#131921] shadow-md px-4 md:px-8 py-3">
+        <nav className="bg-[#131921] text-white-600 shadow-md px-4 md:px-8 py-3">
             <div className="flex justify-between items-center">
 
                 {/* LOGO */}
