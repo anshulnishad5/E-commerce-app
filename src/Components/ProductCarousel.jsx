@@ -21,14 +21,14 @@ function ProductCarousel ( { products } )
             } }
             style={ { paddingBottom: "30px" } }
         >
-            <div className="Productgrid"
+            
             { products.map( ( product ) => (
                 <SwiperSlide key={ product.id }>
                     <ProductCard product={ product } />
                 </SwiperSlide>
             ) ) }
         </Swiper>
-        </div>
+    
     );
 }
 
