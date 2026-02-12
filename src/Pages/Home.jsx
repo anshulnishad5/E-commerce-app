@@ -51,7 +51,8 @@ function Home ()
             { productGroups.map( ( group, index ) => (
                 <section
                     key={ index }
-                    className="max-w-325 mx-auto px-6 mb-16"
+                    className=className="max-w-7xl mx-auto px-6 mb-16"
+
                 >
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-2xl font-bold text-gray-900">
