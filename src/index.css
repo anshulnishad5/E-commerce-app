@@ -42,8 +42,8 @@ body {
   padding: 0 16px;
 }
 
-/* ================= HERO ================= */
-.hero {
+/*  ================= HERO ================= */
+/* .hero {
   background: linear-gradient(to right, #111827, #1f2937);
   color: white;
   padding: 60px 16px;
@@ -72,7 +72,7 @@ body {
   .hero {
     padding: 100px 40px;
   }
-}
+}  */
 
 /* ================= SECTIONS ================= */
 .section {
